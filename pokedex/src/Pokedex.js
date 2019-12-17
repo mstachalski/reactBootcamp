@@ -1,8 +1,6 @@
 import React from "react"
 import Pokecard from "./Pokecard"
-import Container from "react-bootstrap/Container"
 import Row from 'react-bootstrap/Row'
-import Pokemon from "./Pokemon"
 import "./Pokedex.css"
 
 class Pokedex extends React.Component {
@@ -18,13 +16,13 @@ class Pokedex extends React.Component {
 
     render() {
         return (
-            <Container className="text-center">
+            <>
                 <h1 className="titleHeading" style={{ color: this.props.win ? "green" : "red" }}>{this.props.win ? "Winning" : "Loosing"} Hand</h1>
                 <h5 className="totalXP">Total XP : {this.props.xp} </h5>
                 <Row className="justify-content-center">
                     {this.assembleTeam()}
                 </Row>
-            </Container>
+            </>
         )
     }
 }

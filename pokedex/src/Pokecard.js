@@ -6,8 +6,8 @@ import Card from 'react-bootstrap/Card'
 class Pokecard extends React.Component {
     render() {
         return (
-            <Col className="text-center mb-5" sm={3}>
-                <Card className="w-75 shadow">
+            <Col className="text-center mb-5" lg={3} sm={6}>
+                <Card className="shadow">
                     <Card.Img src={this.props.img} variant="top" className="pkmImg"/>
                     <Card.Title>{this.props.name}</Card.Title>
                     <Card.Text>
