@@ -1,0 +1,19 @@
+.card {
+    transition: transform .2s;
+}
+
+.card:hover {
+    transform: scale(1.2);
+}
+.card-img-top {
+    background-color: gainsboro;
+}
+
+.card-text {
+    margin-bottom: 12px;
+}
+
+.card-title {
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
