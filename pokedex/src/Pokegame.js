@@ -24,6 +24,7 @@ class Pokegame extends React.Component {
         this.determineWinner()
     }
 
+    //Fisher-Yates Shuffle
     shufflePokemon() {
         for (let i = pokemon.length - 1; i > 0; i--) {
             let j = Math.floor(Math.random() * (i + 1));
@@ -50,8 +51,6 @@ class Pokegame extends React.Component {
         }
 
         this.setState((prev) => ({
-            leftHand: prev.leftHand,
-            rightHand: prev.rightHand,
             lhXP: calc(prev.leftHand),
             rhXP: calc(prev.rightHand)
         }))
