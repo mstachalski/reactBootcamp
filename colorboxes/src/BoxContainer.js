@@ -1,5 +1,7 @@
 import React from "react"
+import uuid from "uuid"
 import ColoredBox from "./ColoredBox"
+
 
 import "./BoxContainer.css"
 
@@ -11,35 +13,32 @@ class BoxContainer extends React.Component {
 
     constructor(props) {
         super(props)
+
         this.state = {
-            boxColors: []
+            boxColors: Array.from({length: this.props.numBoxes}, () => this.createNewBoxColor())
         }
+
+        //Method binding
         this.changeBoxColor = this.createNewBoxColor.bind(this)
         this.changeColor = this.changeColor.bind(this)
     }
 
-    componentDidMount() {
-        for (let i = 0; i < this.props.numBoxes; i++) {
-            this.setState(s => {
-                const newBoxColor = this.createNewBoxColor()
-                return ({
-                    boxColors: [...s.boxColors, newBoxColor]
-                })
-            })
-        }
-    }
-
-    createNewBoxColor() {
-        return this.props.colors[Math.floor(Math.random() * this.props.colors.length)]
+    createNewBoxColor(currentColor) {
+        let newColor;
+        //Assure that the new color is not the same as the old one
+        do {
+            newColor = this.props.colors[Math.floor(Math.random() * this.props.colors.length)]
+        } while (newColor === currentColor)
+        return newColor
     }
 
     changeColor(target) {
         this.setState(s => {
-            const boxColors = s.boxColors.map((item, index) => {
+            const boxColors = s.boxColors.map((color, index) => {
                 if (index === target) {
-                    return this.createNewBoxColor()
+                    return this.createNewBoxColor(color)
                 } else {
-                    return item
+                    return color
                 }
             })
 
@@ -50,12 +49,11 @@ class BoxContainer extends React.Component {
     }
 
     render() {
-        const boxArr = [];
-        console.log(this.state.boxColors)
+        console.log(this.props.children)
         return (
             <div className="boxContainer">
                 {this.state.boxColors.map((boxColor, index) => {
-                    return (<ColoredBox key={index} color={boxColor} changeBoxColor={this.changeColor} id={index} />)
+                    return (<ColoredBox key={uuid()} color={boxColor} changeBoxColor={this.changeColor} id={index} />)
                 })}
             </div>
         )
