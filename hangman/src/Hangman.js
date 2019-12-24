@@ -22,9 +22,10 @@ class Hangman extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { nWrong: 0, guessed: new Set(), answer: randomWord() };
+    this.state = { nWrong: 0, guessed: new Set(), answer: randomWord(), won: false };
     this.handleGuess = this.handleGuess.bind(this);
     this.restart = this.restart.bind(this)
+    this.checkWin = this.checkWin.bind(this)
   }
 
   /** guessedWord: show current-state of word:
@@ -41,36 +42,53 @@ class Hangman extends Component {
     - if not in answer, increase number-wrong guesses
   */
   handleGuess(evt) {
-    evt.target.disabled = true
     let ltr = evt.target.value;
     this.setState(st => ({
       guessed: st.guessed.add(ltr),
-      nWrong: st.nWrong + (st.answer.includes(ltr) ? 0 : 1)
+      nWrong: st.nWrong + (st.answer.includes(ltr) ? 0 : 1),
+      won: this.checkWin()
     }));
   }
 
   /** generateButtons: return array of letter buttons to render */
   generateButtons() {
     return "abcdefghijklmnopqrstuvwxyz".split("").map(ltr => (
-      <AlphaButtons key={uuid()} ltr={ltr} handleGuess={this.handleGuess} disabled={this.state.guessed.has(ltr)} />
+      <AlphaButtons key={uuid()} ltr={ltr} handleGuess={this.handleGuess} disabled={this.state.guessed.has(ltr) || this.state.won} />
     ));
   }
 
   restart() {
     this.setState({
-      nWrong: 0, guessed: new Set(), answer: randomWord()
+      nWrong: 0, guessed: new Set(), answer: randomWord(), won:false
     })
+  }
+
+  checkWin(){
+    let currAnswer = this.state.answer.split("").filter((ltr) => {
+      return this.state.guessed.has(ltr)
+    })
+
+    console.log("current answer: " + currAnswer)
+
+    if(currAnswer.length === this.state.answer.length) {
+      return true
+    }
+
+    return false
   }
 
   /** render: render game */
   render() {
     console.log(this.state.answer)
-    console.log(this.state.guessed)
+    console.log(this.state.won)
     return (
       <div className='Hangman'>
         <h1>Hangman</h1>
         <img src={this.props.images[this.state.nWrong]} alt={`{${this.state.nWrong} wrong guesses}`} />
-        <p>Wrong guesses: {this.state.nWrong}</p>
+        {
+          this.state.won ? <p>Congratulations!</p> :         <p>Wrong guesses: {this.state.nWrong}</p>
+        }
+
         <p className='Hangman-word'>{this.guessedWord()}</p>
         {
           this.state.nWrong < this.props.maxWrong ?
@@ -78,7 +96,7 @@ class Hangman extends Component {
             <p>Game Over!</p>
         }
         <p>
-          <button onClick={this.restart} className="restartBtn">Restart Game</button>
+          <button onClick={this.restart} className="restartBtn">{this.state.won ? "New Game" : "Restart Game"}</button>
         </p>
 
 
