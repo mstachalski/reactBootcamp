@@ -56,7 +56,7 @@ class Board extends Component {
     let board = [];
     // TODO: create array-of-arrays of true/false values
     do {
-      board=[]
+      board = []
       for (let i = 0; i < this.props.nrows; i++) {
         board[i] = [];
         for (let j = 0; j < this.props.ncols; j++) {
@@ -65,8 +65,6 @@ class Board extends Component {
       }
     } while (!this.checkSolvable(board) || this.checkWin(board))
 
-    console.log(this.checkSolvable(board))
-    console.log(board)
     return board
   }
 
@@ -124,20 +122,26 @@ class Board extends Component {
       const cell = row.map((cellVal, j) => {
         let coord = `${i}-${j}`
         return (
-          <Cell flipCellsAroundMe={() => this.flipCellsAround(coord)} isLit={cellVal} key={j} />
+          <Cell flipCellsAroundMe={() => this.flipCellsAround(coord)} isLit={cellVal} key={j} animation={this.state.hasWon} />
         )
       })
 
       return <tr key={i}>{cell}</tr>
     })
     return (
-      this.state.hasWon ?
-        <h1> You Won! </h1> :
-        <table className="Board">
-          <tbody>
-            {rows}
-          </tbody>
-        </table>
+      // this.state.hasWon ?
+      //   <h1> You Won! </h1> :
+      //   <table className="Board">
+      //     <tbody>
+      //       {rows}
+      //     </tbody>
+      //   </table>
+
+      <table className="Board">
+        <tbody>
+          {rows}
+        </tbody>
+      </table>
 
     )
     // if the game is won, just show a winning msg & render nothing else
