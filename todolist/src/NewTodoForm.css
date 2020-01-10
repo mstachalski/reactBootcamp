@@ -1,0 +1,28 @@
+.formContainer {
+    display: flex;
+    align-items: center;
+    margin-top: 12px;
+}
+
+form {
+    margin-top: 32px;
+}
+
+label {
+    display: block;
+    font-weight: bolder;
+}
+
+button#addBtn {
+    background-color: #faaa68;
+    color: #000000b3;
+    border: 0;
+    padding: 10px;  
+}
+
+input#task {
+    flex-grow: 8;
+    border: 0;
+    padding: 10px;
+    margin-right: 12px;
+}

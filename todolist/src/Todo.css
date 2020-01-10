@@ -1,0 +1,80 @@
+.todo {
+    padding: 16px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;  
+    background-color: rgb(125, 149, 255);
+}
+
+
+#taskText{
+    margin-top: 0px;
+    margin-bottom: 16px;
+    padding: 12px;
+    line-height: 1.5rem;
+}
+
+
+
+#taskControl > button {
+    border-radius: 4px;
+    background-color: #7d95ff;
+    color: white;
+    border: 0;
+    padding: 10px;  
+    border: 2px solid;
+}
+
+#taskControl > button:focus {
+    outline: 0;
+}
+
+#taskControl > .delBtn {
+    border-color: #ff000099;
+    -webkit-transition-duration: 0.8s; /* Safari */
+    transition-duration: 0.8s;
+    transition-property: background;
+    background-position: center;
+}
+
+#taskControl > .delBtn:hover {
+    background: red radial-gradient(circle, transparent 1%, red 1%) center/15000%;
+}
+
+#taskControl > .delBtn:active {
+    background-color: #6eb9f7;
+    background-size: 100%;
+    transition: background 0s;
+}
+
+#taskControl > .editBtn {
+    margin-right: 12px;
+    border-color: #faaa68;
+    -webkit-transition-duration: 0.8s; /* Safari */
+    transition-duration: 0.8s;
+    transition-property: background;
+    background-position: center;
+}
+
+#taskControl > .editBtn:hover {
+    background: #faaa68 radial-gradient(circle, transparent 1%, #faaa68 1%) center/140000%;
+}
+
+#taskControl > .editBtn:active {
+    background-color: #e48333;
+    background-size: 100%;
+    transition: background 0s;
+}
+
+#taskControl {
+    margin-right: 12px;
+    margin-left: auto;
+}
+
+/* #taskControl > span {
+    padding: 0 20px
+}
+
+#taskControl > span:last-child {
+    padding-right: 0px;
+} */
