@@ -30,7 +30,6 @@ class TodoList extends Component {
         } else {
             store.set("tasks", [newTask])
         }
-
     }
 
 
