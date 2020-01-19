@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 
-import "./NewTodoForm.css"
+import "./TodoForm.css"
 
-class NewTodoForm extends Component {
+class TodoForm extends Component {
 
     constructor(props) {
         super(props)
 
         this.state = {
-            task: ""
+            task: this.props.initialValue
         }
 
         this.handleInputChange = this.handleInputChange.bind(this)
@@ -26,7 +26,7 @@ class NewTodoForm extends Component {
 
     handleTaskSubmit(e) {
         e.preventDefault()
-        this.props.addTask(this.state.task)
+        this.props.formAction(this.state.task)
         this.setState({ task: "" })
     }
 
@@ -36,11 +36,11 @@ class NewTodoForm extends Component {
             <form onSubmit={this.handleTaskSubmit}>
 
                 <label htmlFor="task">
-                    New Todo
+                    {this.props.formHeading}
                 </label>
                 <div className="formContainer">
                     <input id="task" name="task" type="text" placeholder="New Task" value={this.state.task} onChange={this.handleInputChange} required/>
-                    <button type="submit" id="addBtn">Add Todo</button>
+                    <button type="submit" id="addBtn">{this.props.actionText}</button>
                 </div >
             </form>
 
@@ -49,4 +49,4 @@ class NewTodoForm extends Component {
     }
 }
 
-export default NewTodoForm;
+export default TodoForm;

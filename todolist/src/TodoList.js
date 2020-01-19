@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import uuid from "uuid"
+import store from "store2"
 
 import Todo from "./Todo"
-import NewTodoForm from "./NewTodoForm"
+import TodoForm from "./TodoForm"
 
 import "./TodoList.css"
 
@@ -10,16 +11,42 @@ class TodoList extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            tasks: []
+            tasks: store.get("tasks") || []
         }
 
         this.addTask = this.addTask.bind(this)
+        this.editTask = this.editTask.bind(this)
+        this.deleteTask = this.deleteTask.bind(this)
     }
 
-    addTask(newTask){
+    addTask(newTaskText){
+        const newTask = {text: newTaskText, id: uuid()}
         this.setState(prev => ({
             tasks: [...prev.tasks, newTask]
         }))
+
+        if(store.has("tasks")) {
+            store.add("tasks", newTask)
+        } else {
+            store.set("tasks", [newTask])
+        }
+
+    }
+
+
+    //editedTask: Object {text, id}
+    editTask(editedTask){
+        const taskIndex = this.state.tasks.findIndex(task => task.id === editedTask.id)
+        this.setState(prev => ({
+            tasks : [...prev.tasks.slice(0, taskIndex), editedTask, ...prev.tasks.slice(taskIndex+1,)]
+        }), ()=> store.set("tasks", this.state.tasks))
+    }
+
+    deleteTask(taskId) {
+        const taskIndex = this.state.tasks.findIndex(task => task.id === taskId)
+        this.setState(prev => ({
+            tasks : [...prev.tasks.slice(0, taskIndex), ...prev.tasks.slice(taskIndex+1,)]
+        }),() => store.set("tasks", this.state.tasks))
     }
 
     render() {
@@ -31,10 +58,9 @@ class TodoList extends Component {
                 <p id="subTitle">A Simple React Todo List App.</p>
                 <hr />
                 {this.state.tasks.map(item => {
-                    const id = uuid()
-                    return <Todo task={item} key={id} id={id} />
+                    return <Todo task={item.text} key={item.id} id={item.id} edit={this.editTask} delete={this.deleteTask} />
                 })}
-                <NewTodoForm addTask={this.addTask}/>
+                <TodoForm formAction={this.addTask} actionText={"Add"} formHeading={"New ToDo"} initialValue={""}/>
             </div>
 
         );
