@@ -24,7 +24,6 @@ class BoxList extends Component {
             <div>
                 <NewBoxForm create={this.createBox} />
                 {this.state.boxes.map(item => {
-                    console.log(item)
                     return <Box width={item.width} height={item.height} color={item.color} key={item.color} />
                 })}
             </div>

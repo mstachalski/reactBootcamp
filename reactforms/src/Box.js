@@ -9,7 +9,6 @@ class Box extends Component {
             marginBottom: 8
         }
 
-        console.log(this.props.width)
         return (
             <div style={style}></div>
         );
